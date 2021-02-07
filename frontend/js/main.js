@@ -8,36 +8,69 @@ const htmlSquash = async (src) => {
   });
   const text = await res.text();
   if (res.status !== 200) {
-    throw new Error(text);
+    throw { code: res.status, msg: text, };
   }
   return text;
 };
 
 window.addEventListener("DOMContentLoaded", () => {
+  ace.config.set("basePath", "https://pagecdn.io/lib/ace/1.4.12/");
+
+  const editor = {
+    mode: "ace/mode/html",
+    theme: "ace/theme/chaos",
+  };
   const elms = {
     input: {
       form: document.querySelector("#input form"),
-      text: document.querySelector("#input textarea"),
+      submit: document.querySelector("#input input[type=submit]"),
+      text: ace.edit("input-html-box", {
+        ...editor,
+        useSoftTabs: true,
+      }),
+      msgbox: document.querySelector("#input .msg-box"),
     },
     output: {
-      text: document.querySelector("#output textarea"),
+      text: ace.edit("output-html-box", {
+        ...editor,
+        readOnly: true,
+      }),
     },
+  };
+
+  let msgtimer = null;
+  const showMsg = (name, perm) => {
+    elms.input.msgbox.querySelectorAll(".shown").forEach((e) => {
+      e.classList.remove("shown");
+    });
+    elms.input.msgbox.querySelector("." + name).classList.add("shown");
+
+    if (msgtimer) clearTimeout(msgtimer);
+    if (!perm) {
+      msgtimer = setTimeout(() => {
+        showMsg("default", true);
+      }, 5000);
+    }
   };
 
   elms.input.form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    e.stopImmediatePropagation();
 
-    elms.input.text.form.disabled = true;
+    elms.input.submit.disabled = true;
+    elms.input.text.setReadOnly(true);
+    showMsg("processing", true);
 
     try {
-      elms.output.text.value = await htmlSquash(elms.input.text.value);
+      elms.output.text.setValue(await htmlSquash(elms.input.text.getValue()));
+      showMsg("done");
 
     } catch (err) {
       console.error(err);
+      showMsg(err === 408 ? "timeout" : "error");
 
     } finally {
-      elms.input.text.form.disabled = false;
+      elms.input.submit.disabled = false;
+      elms.input.text.setReadOnly(false);
     }
   });
 });

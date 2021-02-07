@@ -1,5 +1,18 @@
 @import "destyle.css";
 
+$color1: #222831;
+$color2: #393e46;
+$color3: #ffd369;
+$color4: #eeeeee;
+
+@import "./layout.scss";
+
 html {
   font-size: 12pt;
+  font-family: "Source Code Pro", monospace;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }

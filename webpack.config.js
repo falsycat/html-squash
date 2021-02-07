@@ -13,6 +13,7 @@ module.exports = {
   },
   plugins: [
       new plugins.htmlWebpack({
+        scriptLoading: "blocking",
         template: path.resolve(__dirname, "frontend" , "index.html"),
         filename: "index.html",
         inject: "head",

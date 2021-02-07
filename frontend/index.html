@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="ja" prefix="og: http://ogp.me/ns#">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="content-language" content="ja">
@@ -17,22 +18,41 @@
   <meta property="og:description" content="Squashes your HTML into a single file.">
   <meta property="og:image" content="">
 
-  <script src="./script.js"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display&family=Source+Code+Pro&display=optional" rel="stylesheet">
+
+  <script src="https://pagecdn.io/lib/ace/1.4.12/ace.min.js" crossorigin="anonymous" integrity="sha256-T5QdmsCQO5z8tBAXMrCZ4f3RX8wVdiA0Fu17FGnU1vU=" ></script>
 </head>
 
 <body>
   <div id="header">
     <h1>HTML SQUASH</h1>
-    <p>Squashes your HTML into a single file.</p>
+    <p class="description">Squashes your HTML into a single file.</p>
+    <p class="copyright">developed by <a href="https://falsy.cat/" target="_blank">falsycat</a> under <a
+        href="http://wtfpl.net/" target="_blank">WTFPL</a></p>
   </div>
-  <div id="input">
-    <form>
-      <textarea></textarea>
-      <input type="submit">
-    </form>
-  </div>
-  <div id="output">
-    <textarea readonly></textarea>
+  <div id="main">
+    <div id="input">
+      <form>
+        <div class="html-box" id="input-html-box"></div>
+        <div class="controller">
+          <div class="msg-box">
+            <p class="default shown">squashing may take a while :D</p>
+            <p class="processing">processing... this may take a while :)</p>
+            <p class="done">done! X)</p>
+            <p class="timeout urgent">it's too big to handle, sry... X(</p>
+            <p class="error urgent">woops! something went to wrong ;(</p>
+          </div>
+          <input type="submit" value="SQUASH">
+        </div>
+      </form>
+    </div>
+    <div id="output">
+      <div class="html-box" id="output-html-box"></div>
+      <div class="ad">
+        <iframe data-aa="1566909" src="//acceptable.a-ads.com/1566909" scrolling="no" style="border:0px; padding:0; width:100%; height:100%; overflow:hidden" allowtransparency="true"></iframe>
+      </div>
+    </div>
   </div>
 </body>
 
