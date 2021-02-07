@@ -14,15 +14,26 @@ const htmlSquash = async (src) => {
     const doc = dom.window.document;
     await Promise.all([
       ...[...doc.querySelectorAll("script")].map(async (e) => {
-        if (e.src === "") return;
-        const s = doc.createElement("script");
-        s.innerHTML = await fetch(e.src).then((p) => p.text());
-        e.parentNode.replaceChild(s, e);
+        if (e.src === "" ||
+            e.src.match(/^\./) ||
+            (!e.src.match(/^https?:/) && !e.src.match(/^\/\//))) {
+          return;
+        }
+        try {
+          const src = await fetch(e.src).then((p) => p.text());
+          const s = doc.createElement("script");
+          s.innerHTML = src;
+          e.parentNode.replaceChild(s, e);
+        } catch (err) {
+        }
       }),
       ...[...doc.querySelectorAll("link[rel=stylesheet]")].map(async (e) => {
         const s = doc.createElement("style");
-        s.innerHTML = await fetch(e.href).then((p) => p.text());
-        e.parentNode.replaceChild(s, e);
+        try {
+          s.innerHTML = await fetch(e.href).then((p) => p.text());
+          e.parentNode.replaceChild(s, e);
+        } catch (err) {
+        }
       })]);
     return "<!DOCTYPE html>"+doc.documentElement.outerHTML;
   } catch (err) {
