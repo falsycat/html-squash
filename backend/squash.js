@@ -24,7 +24,7 @@ const htmlSquash = async (src) => {
         s.innerHTML = await fetch(e.href).then((p) => p.text());
         e.parentNode.replaceChild(s, e);
       })]);
-    return doc.documentElement.outerHTML;
+    return "<!DOCTYPE html>"+doc.documentElement.outerHTML;
   } catch (err) {
     throw new Exception(500, err.message);
   }
