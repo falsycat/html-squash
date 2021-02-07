@@ -5,7 +5,6 @@
   "author": "falsycat",
   "dependencies": {
     "destyle.css": "^2.0.2",
-    "html-minifier": "^4.0.0",
     "jsdom": "^16.4.0",
     "node-fetch": "^2.6.1"
   },
