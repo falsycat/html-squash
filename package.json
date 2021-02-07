@@ -1,0 +1,34 @@
+{
+  "name": "html-squash",
+  "version": "1.0.0",
+  "description": "Squashes your HTML into a single file.",
+  "author": "falsycat",
+  "dependencies": {
+    "destyle.css": "^2.0.2",
+    "html-minifier": "^4.0.0",
+    "jsdom": "^16.4.0",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "css-loader": "^5.0.1",
+    "html-webpack-plugin": "^5.0.0",
+    "netlify-lambda": "^2.0.3",
+    "npm-run-all": "^4.1.5",
+    "sass": "^1.32.6",
+    "sass-loader": "^11.0.0",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.21.1",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-node-externals": "^2.5.2"
+  },
+  "scripts": {
+    "test:wp": "webpack-cli serve --mode development",
+    "test:lambda": "netlify-lambda serve backend --config webpack.lambda.js",
+    "build": "run-p build:lambda build:wp",
+    "build:prod": "run-p build:lambda build:wp-prod",
+    "build:wp": "webpack --mode development",
+    "build:wp-prod": "webpack --mode production",
+    "build:lambda": "netlify-lambda build backend --config webpack.lambda.js"
+  }
+}
