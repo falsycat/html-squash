@@ -19,7 +19,7 @@
   <meta property="og:image" content="">
 
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display&family=Source+Code+Pro&display=optional" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display&family=Source+Code+Pro&display=swap" rel="stylesheet">
 
   <script src="https://pagecdn.io/lib/ace/1.4.12/ace.min.js" crossorigin="anonymous" integrity="sha256-T5QdmsCQO5z8tBAXMrCZ4f3RX8wVdiA0Fu17FGnU1vU=" ></script>
 </head>
@@ -33,21 +33,19 @@
   </div>
   <div id="main">
     <div id="input">
-      <form>
-        <div class="html-box" id="input-html-box"></div>
-        <div class="controller">
-          <div class="msg-box">
-            <p class="default shown">squashing may take a while :D</p>
-            <p class="processing">processing... this may take a while :)</p>
-            <p class="done">done! X)</p>
-            <p class="timeout urgent">it's too big to handle, sry... X(</p>
-            <p class="error urgent">woops! something went to wrong ;(</p>
-          </div>
-          <input type="submit" value="SQUASH">
-        </div>
-      </form>
+      <h2>INPUT</h2>
+      <div class="html-box" id="input-html-box"></div>
+      <div class="msg-box">
+        <p class="default shown">squashing may take a while :D</p>
+        <p class="processing">processing... this may take a while :)</p>
+        <p class="done">done! X)</p>
+        <p class="timeout urgent">it's too big to handle, sry... X(</p>
+        <p class="error urgent">woops! something went to wrong ;(</p>
+      </div>
+      <button>SQUASH</button>
     </div>
     <div id="output">
+      <h2>OUTPUT (READONLY)</h2>
       <div class="html-box" id="output-html-box"></div>
       <div class="ad">
         <iframe data-aa="1566909" src="//acceptable.a-ads.com/1566909" scrolling="no" style="border:0px; padding:0; width:100%; height:100%; overflow:hidden" allowtransparency="true"></iframe>

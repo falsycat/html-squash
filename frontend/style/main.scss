@@ -5,6 +5,12 @@ $color2: #393e46;
 $color3: #ffd369;
 $color4: #eeeeee;
 
+@mixin phone() {
+  @media screen and (max-width: 900px) {
+    @content;
+  }
+}
+
 @import "./layout.scss";
 
 html {

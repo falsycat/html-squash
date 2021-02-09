@@ -22,8 +22,7 @@ window.addEventListener("DOMContentLoaded", () => {
   };
   const elms = {
     input: {
-      form: document.querySelector("#input form"),
-      submit: document.querySelector("#input input[type=submit]"),
+      button: document.querySelector("#input button"),
       text: ace.edit("input-html-box", {
         ...editor,
         useSoftTabs: true,
@@ -53,10 +52,8 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  elms.input.form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    elms.input.submit.disabled = true;
+  elms.input.button.addEventListener("click", async (e) => {
+    elms.input.button.disabled = true;
     elms.input.text.setReadOnly(true);
     showMsg("processing", true);
 
@@ -69,7 +66,7 @@ window.addEventListener("DOMContentLoaded", () => {
       showMsg(err === 408 ? "timeout" : "error");
 
     } finally {
-      elms.input.submit.disabled = false;
+      elms.input.button.disabled = false;
       elms.input.text.setReadOnly(false);
     }
   });
