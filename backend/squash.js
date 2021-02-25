@@ -10,10 +10,10 @@ class Exception {
 
 const htmlSquash = async (src, urlRegex) => {
   const isExternal = (url) => {
-    return
-      e.src !== "" &&
-      e.src.match(/^(?:https?\:)?\/\//) &&
-      e.src.match(urlRegex);
+    return (
+      url !== "" &&
+      !!url.match(/^(?:https?\:)?\/\//) &&
+      !!url.match(urlRegex));
   };
   try {
     const dom = new jsdom.JSDOM(src);
@@ -56,7 +56,7 @@ exports.handler = async (ev, ctx) => {
     const src      = ev.body;
     const urlRegex = ev.queryStringParameters.urlRegex || "";
 
-    const ret = await htmlSquash(src, new RegExp(urlRegex));
+    const ret = await htmlSquash(src, urlRegex);
     return {
       statusCode: 200,
       body: ret,
