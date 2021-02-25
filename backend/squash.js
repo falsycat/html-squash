@@ -8,15 +8,19 @@ class Exception {
   }
 };
 
-const htmlSquash = async (src) => {
+const htmlSquash = async (src, urlRegex) => {
+  const isExternal = (url) => {
+    return
+      e.src !== "" &&
+      e.src.match(/^(?:https?\:)?\/\//) &&
+      e.src.match(urlRegex);
+  };
   try {
     const dom = new jsdom.JSDOM(src);
     const doc = dom.window.document;
     await Promise.all([
       ...[...doc.querySelectorAll("script")].map(async (e) => {
-        if (e.src === "" ||
-            e.src.match(/^\./) ||
-            (!e.src.match(/^https?:/) && !e.src.match(/^\/\//))) {
+        if (!isExternal(e.src)) {
           return;
         }
         try {
@@ -28,8 +32,11 @@ const htmlSquash = async (src) => {
         }
       }),
       ...[...doc.querySelectorAll("link[rel=stylesheet]")].map(async (e) => {
-        const s = doc.createElement("style");
+        if (!isExternal(e.href)) {
+          return;
+        }
         try {
+          const s = doc.createElement("style");
           s.innerHTML = await fetch(e.href).then((p) => p.text());
           e.parentNode.replaceChild(s, e);
         } catch (err) {
@@ -46,8 +53,10 @@ exports.handler = async (ev, ctx) => {
     if (ev.httpMethod !== "POST") {
       throw new Exception(400, "invalid request method: " + ev.httpMethod);
     }
-    const src = ev.body;
-    const ret = await htmlSquash(src);
+    const src      = ev.body;
+    const urlRegex = ev.queryStringParameters.urlRegex || "";
+
+    const ret = await htmlSquash(src, new RegExp(urlRegex));
     return {
       statusCode: 200,
       body: ret,
