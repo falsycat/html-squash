@@ -129,6 +129,7 @@
   right: 0;
   top: 0;
   bottom: 0;
+  z-index: 10;  /* fuck */
 
   background-color: rgba(0, 0, 0, .5);
   color: $color4;
@@ -157,7 +158,7 @@
       vertical-align: middle;
     }
   }
-  input[type="text"] {
+  input {
     background-color: darken($color1, 20%);
     border: 1px solid $color2;
     padding: .25rem;
