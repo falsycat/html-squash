@@ -1,8 +1,8 @@
 import "../style/main.scss";
 
-const htmlSquash = async (src) => {
+const htmlSquash = async (src, urlRegex) => {
   const res = await fetch(
-    "/.netlify/functions/squash", {
+    "/.netlify/functions/squash?urlRegex="+encodeURI(urlRegex), {
     method: "POST",
     body: src,
   });
@@ -22,7 +22,8 @@ window.addEventListener("DOMContentLoaded", () => {
   };
   const elms = {
     input: {
-      button: document.querySelector("#input button"),
+      option: document.querySelector("#input button.option"),
+      squash: document.querySelector("#input button.squash"),
       text: ace.edit("input-html-box", {
         ...editor,
         useSoftTabs: true,
@@ -35,7 +36,19 @@ window.addEventListener("DOMContentLoaded", () => {
         readOnly: true,
       }),
     },
+    option: {
+      popup: document.querySelector("#option"),
+      urlRegex: document.querySelector("#option input.url-regex"),
+      close: document.querySelector("#option button.close"),
+    },
   };
+
+  elms.input.option.addEventListener("click", async (e) => {
+    elms.option.popup.classList.add("shown");
+  });
+  elms.option.close.addEventListener("click", async (e) => {
+    elms.option.popup.classList.remove("shown");
+  })
 
   let msgtimer = null;
   const showMsg = (name, perm) => {
@@ -52,13 +65,15 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  elms.input.button.addEventListener("click", async (e) => {
-    elms.input.button.disabled = true;
+  elms.input.squash.addEventListener("click", async (e) => {
+    elms.input.squash.disabled = true;
     elms.input.text.setReadOnly(true);
     showMsg("processing", true);
 
     try {
-      elms.output.text.setValue(await htmlSquash(elms.input.text.getValue()));
+      const src      = elms.input.text.getValue();
+      const urlRegex = elms.option.urlRegex.value;
+      elms.output.text.setValue(await htmlSquash(src, urlRegex));
       showMsg("done");
 
     } catch (err) {
@@ -66,7 +81,7 @@ window.addEventListener("DOMContentLoaded", () => {
       showMsg(err === 408 ? "timeout" : "error");
 
     } finally {
-      elms.input.button.disabled = false;
+      elms.input.squash.disabled = false;
       elms.input.text.setReadOnly(false);
     }
   });

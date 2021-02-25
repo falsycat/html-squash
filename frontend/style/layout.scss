@@ -98,32 +98,72 @@
         }
       }
     }
+    div.button-list {
+      display: flex;
+    }
     button {
-      display: block;
-      padding: .25rem;
-      height: 2.25rem;
-      line-height: 1rem;
-      background-color: $color3;
-      border: 1px solid $color3;
-      color: $color2;
-      font-family: "Big Shoulders Display", sans-serif;
-      font-weight: bold;
-      text-align: center;
-
-      transition: background-color .5s, color .5s;
-      &:enabled:hover {
-        background-color: lighten($color3, 10%);
+      flex-grow: 1;
+      &.option {
+        margin-right: .25rem;
       }
-      &:disabled {
-        background-color: $color1;
-        color: $color4;
-        text-decoration: line-through;
+      &.squash {
+        margin-left: .25rem;
       }
     }
   }
   #output {
     div.ad {
       height: 4rem;
+    }
+  }
+}
+
+#option {
+  display: none;
+  &.shown {
+    display: flex;
+  }
+
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
+  background-color: rgba(0, 0, 0, .5);
+  color: $color4;
+
+  justify-content: center;
+  align-items: center;
+  .window {
+    background-color: $color1;
+    border: 1px solid $color2;
+    padding: 1rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    font-family: "Big Shoulders Display", sans-serif;
+    text-align: center;
+  }
+  button {
+    margin: 0 auto;
+    width: 8rem;
+  }
+  table {
+    margin: 1rem;
+    td {
+      padding: .25rem;
+      vertical-align: middle;
+    }
+  }
+  input[type="text"] {
+    background-color: darken($color1, 20%);
+    border: 1px solid $color2;
+    padding: .25rem;
+    line-height: 1.5em;
+    &:focus {
+      border-color: $color3;
     }
   }
 }

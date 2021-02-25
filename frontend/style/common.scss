@@ -1,0 +1,22 @@
+button {
+  display: block;
+  padding: .25rem;
+  height: 2.25rem;
+  line-height: 1rem;
+  background-color: $color3;
+  border: 1px solid $color3;
+  color: $color2;
+  font-family: "Big Shoulders Display", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  
+  transition: background-color .5s, color .5s;
+  &:enabled:hover {
+    background-color: lighten($color3, 10%);
+  }
+  &:disabled {
+    background-color: $color1;
+    color: $color4;
+    text-decoration: line-through;
+  }
+}
